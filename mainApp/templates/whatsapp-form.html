@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send WhatsApp Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="file"],
+        input[type="text"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="file"] {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+        }
+        input[type="text"] {
+            border-color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://cdn.tiny.cloud/1/20vf9wykeuz5n3xsm5cwbuc5y8b7f1qv8pn0dzabno4stdzb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Send WhatsApp Messages</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="file" accept=".xlsx,.csv" required>
+            <textarea name="message" placeholder="Enter your message here" ></textarea>
+            <script>
+                tinymce.init({
+                    selector: 'textarea',
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                });
+            </script>
+            <button type="submit">Send Messages</button>
+        </form>
+        
+        {% if success %}
+        <p class="success-message">Messages sent successfully!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
